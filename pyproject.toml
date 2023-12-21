@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "supermarket-etl"
+version = "0.1.0"
+description = "Projeto de Dados (ETL) de uma rede de supermercados"
+authors = ["teodoromatheus <matheusteodoro.r@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
