@@ -12,6 +12,7 @@ fastapi = "^0.105.0"
 uvicorn = "^0.25.0"
 faker = "^21.0.0"
 taskipy = "^1.12.2"
+requests = "^2.31.0"
 
 
 [build-system]
@@ -19,4 +20,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.taskipy.tasks]
-API = "uvicorn back-end.API.API:app --reload"
+API = "uvicorn backend.API.API:app --reload"
