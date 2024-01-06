@@ -13,6 +13,7 @@ uvicorn = "^0.25.0"
 faker = "^21.0.0"
 taskipy = "^1.12.2"
 requests = "^2.31.0"
+pyarrow = "^14.0.2"
 
 
 [build-system]
