@@ -1,6 +1,8 @@
 import requests
 from contracts.schema import GenericSchema
 from typing import List
+from io import BytesIO
+import pyarrow.parquet as pq
 import pandas as pd
 
 class APICollector:
@@ -14,7 +16,14 @@ class APICollector:
         response = self.getData(param)
         resp = self.extractData(response)
         df = self.transformDF(resp)
-        return df
+        parquet_file = self.convertToParquet(df)
+
+        if parquet_file is not None:
+            print('Salva na Aws')
+        
+        else:
+            print('Erro')
+            return None
     
     def getData(self, param: int):
         response = None
@@ -40,3 +49,12 @@ class APICollector:
     def transformDF(self, response):
         df = pd.DataFrame(response)
         return df
+    
+    def convertToParquet(self, df):
+        self._buffer = BytesIO()
+        try:
+            df.to_parquet(self._buffer)
+            return self._buffer
+        except:
+            print('Erro ao transformar o DataFrame em Parquet')
+            self._buffer = None
