@@ -13,7 +13,7 @@ df_products.set_index('indice',inplace=True)
 async def gerar_compra():
     index = random.randint(1,len(df_products)+1)
     registro = df_products.iloc[index]
-    return {
+    return [{
         "client": fake.name(),
         "creditCard": fake.credit_card_provider(),
         "ean": int(registro["ean"]),
@@ -22,7 +22,7 @@ async def gerar_compra():
         "store": 11,
         "dateTime": fake.iso8601(),
         "clientPosition": fake.location_on_land()
-    }  
+    }]
 
 @app.get("/gerar_compra/{numero_registro}")
 async def gerar_compra(numero_registro: int):
