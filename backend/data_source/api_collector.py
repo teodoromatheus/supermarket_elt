@@ -1,10 +1,10 @@
 import requests
-from contracts.schema import GenericSchema, CompraSchema
+from contracts.schema import GenericSchema
 from typing import List
 
 class APICollector:
-    def __init__ (self):
-        self._schema = CompraSchema
+    def __init__ (self, schema):
+        self._schema = schema
         self._aws = None
         self._buffer = None
         return
