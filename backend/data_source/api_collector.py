@@ -1,6 +1,7 @@
 import requests
 from contracts.schema import GenericSchema
 from typing import List
+import pandas as pd
 
 class APICollector:
     def __init__ (self, schema):
@@ -12,7 +13,8 @@ class APICollector:
     def start(self, param: int):
         response = self.getData(param)
         resp = self.extractData(response)
-        return resp
+        df = self.transformDF(resp)
+        return df
     
     def getData(self, param: int):
         response = None
@@ -35,5 +37,6 @@ class APICollector:
             result.append(index)
         return result
     
-    def transformDF(self):
-        return
+    def transformDF(self, response):
+        df = pd.DataFrame(response)
+        return df
