@@ -2,13 +2,14 @@ import requests
 from contracts.schema import GenericSchema
 from typing import List
 from io import BytesIO
+from datetime import datetime
 import pyarrow.parquet as pq
 import pandas as pd
 
 class APICollector:
-    def __init__ (self, schema):
+    def __init__ (self, schema, aws):
         self._schema = schema
-        self._aws = None
+        self._aws = aws
         self._buffer = None
         return
     
@@ -19,11 +20,11 @@ class APICollector:
         parquet_file = self.convertToParquet(df)
 
         if parquet_file is not None:
-            print('Salva na Aws')
+            file_name = self.fileName()
+            self._aws.upload_file(data=parquet_file, s3_key=file_name)
+            return True
         
-        else:
-            print('Erro')
-            return None
+        return False
     
     def getData(self, param: int):
         response = None
@@ -58,3 +59,8 @@ class APICollector:
         except:
             print('Erro ao transformar o DataFrame em Parquet')
             self._buffer = None
+    
+    def fileName(self):
+        data_atual = datetime.now().isoformat()
+        match = data_atual.split(".")
+        return f'api/api-response-compra-{match[0]}.parquet'
